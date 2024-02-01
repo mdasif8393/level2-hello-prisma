@@ -1,0 +1,14 @@
+{
+  "name": "level2-hello-prisma",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/mdasif8393/level2-hello-prisma.git",
+  "author": "<md.asif.8393@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "@types/node": "^20.11.13",
+    "prisma": "^5.9.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
