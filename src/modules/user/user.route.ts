@@ -7,4 +7,6 @@ router.post("/createUser", UserController.insertIntoDB);
 
 router.post("/profile", UserController.insertOrUpdateProfile);
 
+router.get("/", UserController.getUsers);
+
 export const UserRoutes = router;
