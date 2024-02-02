@@ -9,4 +9,6 @@ router.post("/profile", UserController.insertOrUpdateProfile);
 
 router.get("/", UserController.getUsers);
 
+router.get("/:id", UserController.getSingleUser);
+
 export const UserRoutes = router;

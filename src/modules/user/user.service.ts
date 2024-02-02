@@ -47,8 +47,18 @@ const getUsers = async () => {
   return result;
 };
 
+const getSingleUser = async (id: number) => {
+  const result = await prisma.user.findUnique({
+    where: {
+      id,
+    },
+  });
+  return result;
+};
+
 export const UserService = {
   insertIntoDB,
   insertOrUpdateProfile,
   getUsers,
+  getSingleUser,
 };
