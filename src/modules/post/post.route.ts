@@ -9,4 +9,6 @@ router.get("/", PostController.getAllPosts);
 
 router.get("/:id", PostController.getSinglePost);
 
+router.patch("/:id", PostController.updatePost);
+
 export const PostRoutes = router;
