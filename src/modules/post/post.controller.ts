@@ -14,6 +14,20 @@ const createPostController = async (req: Request, res: Response) => {
   }
 };
 
+const getAllPosts = async (req: Request, res: Response) => {
+  try {
+    const result = await PostService.getAllPosts();
+    res.send({
+      success: true,
+      message: "Get Posts Successfully",
+      data: result,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+
 export const PostController = {
   createPostController,
+  getAllPosts,
 };

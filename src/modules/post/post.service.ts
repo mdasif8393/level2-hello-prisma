@@ -13,6 +13,17 @@ const createPost = async (data: Post): Promise<Post> => {
   return result;
 };
 
+const getAllPosts = async () => {
+  const result = await prisma.post.findMany({
+    include: {
+      author: true,
+      category: true,
+    },
+  });
+  return result;
+};
+
 export const PostService = {
   createPost,
+  getAllPosts,
 };
