@@ -13,39 +13,60 @@ const createPost = async (data: Post): Promise<Post> => {
   return result;
 };
 
+/**
+ * Pagination
+ * limit = 5
+ * page = 3
+ * total = 20
+ * skip = limit * page - limit
+ * limit= 5 * 3 - 5 = 10
+ * 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
+ */
+
 const getAllPosts = async (options: any) => {
-  const { sortBy, sortOrder, searchTerm } = options;
-  const result = await prisma.post.findMany({
-    include: {
-      author: true,
-      category: true,
-    },
-    orderBy:
-      sortBy && sortOrder
-        ? {
-            [sortBy]: sortOrder,
-          }
-        : { createdAt: "desc" },
-    where: {
-      OR: [
-        {
-          title: {
-            contains: searchTerm,
-            mode: "insensitive",
-          },
-        },
-        {
-          author: {
-            name: {
+  return prisma.$transaction(async (tx) => {
+    const { sortBy, sortOrder, searchTerm, page, limit } = options;
+    const take = parseInt(limit);
+    const skip = parseInt(page) * parseInt(limit) - parseInt(limit);
+    const result = await tx.post.findMany({
+      take,
+      skip,
+      include: {
+        author: true,
+        category: true,
+      },
+      orderBy:
+        sortBy && sortOrder
+          ? {
+              [sortBy]: sortOrder,
+            }
+          : { createdAt: "desc" },
+      where: {
+        OR: [
+          {
+            title: {
               contains: searchTerm,
               mode: "insensitive",
             },
           },
-        },
-      ],
-    },
+          {
+            author: {
+              name: {
+                contains: searchTerm,
+                mode: "insensitive",
+              },
+            },
+          },
+        ],
+      },
+    });
+    const total = await tx.post.count();
+
+    return {
+      data: result,
+      total,
+    };
   });
-  return result;
 };
 
 const getSinglePost = async (id: number) => {
@@ -58,7 +79,6 @@ const getSinglePost = async (id: number) => {
       category: true,
     },
   });
-  return result;
 };
 
 export const PostService = {
