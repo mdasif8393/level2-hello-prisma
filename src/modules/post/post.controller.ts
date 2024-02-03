@@ -27,7 +27,21 @@ const getAllPosts = async (req: Request, res: Response) => {
   }
 };
 
+const getSinglePost = async (req: Request, res: Response) => {
+  try {
+    const result = await PostService.getSinglePost(parseInt(req.params.id));
+    res.send({
+      success: true,
+      message: "Get Single Post Successfully",
+      data: result,
+    });
+  } catch (err) {
+    res.send(err);
+  }
+};
+
 export const PostController = {
   createPostController,
   getAllPosts,
+  getSinglePost,
 };
