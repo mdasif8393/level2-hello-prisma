@@ -44,6 +44,9 @@ const getUsers = async () => {
     //   email: true,
     // },
   });
+
+  //// Raw query
+  // const result = await prisma.$queryRaw`select * from users`;
   return result;
 };
 
