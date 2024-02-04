@@ -13,4 +13,6 @@ router.patch("/:id", PostController.updatePost);
 
 router.delete("/:id", PostController.deletePost);
 
+// router.get("/", PostController.learnAggregateAndGrouping);
+
 export const PostRoutes = router;
